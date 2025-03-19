@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import Header from "./components/header/header";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -20,10 +21,14 @@ const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
 const App = () => {
   return (
     <AuthProvider>
+      
       <Router>
+      <Header/>
         <Routes>
+        
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          
           <Route
             path="/dashboard"
             element={
@@ -32,6 +37,34 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/blog"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/grupy"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/faq"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>

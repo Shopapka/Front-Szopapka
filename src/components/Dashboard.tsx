@@ -12,7 +12,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div className='dashboadr_main'>
       <h2>Dashboard</h2>
       <p>Welcome, {user?.email}</p>
       <button onClick={handleLogout}>Logout</button>

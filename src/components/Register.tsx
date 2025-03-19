@@ -22,31 +22,33 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form onSubmit={handleSubmit} className="auth-form">
-        <h2>Register</h2>
-        {error && <p className="error">{error}</p>}
-        <input
-          maxLength={100}
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          maxLength={100}
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Register</button>
-        <p className="switch">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </form>
+    <div className="register_main">
+      <div className="auth-container">
+        <form onSubmit={handleSubmit} className="auth-form">
+          <h2>Register</h2>
+          {error && <p className="error">{error}</p>}
+          <input
+            maxLength={100}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            maxLength={100}
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Register</button>
+          <p className="switch">
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
