@@ -11,9 +11,13 @@ export const Card = (props: any) => {
 
   return (
     <div className="card">
-      <img src={props.img} alt="placeholder" />
-      <h2>Rodzina: {props.nazwa}</h2>
-      <button onClick={onShoppingListClick}>PRZEJDŹ DO LISTY ZAKUPÓW</button>
+      <div className="card__image-container">
+        <img className="card__image" src={props.img} alt="placeholder" />
+      </div>
+      <h2 className="card__title">{props.nazwa}</h2>
+      <button className="card__button" onClick={onShoppingListClick}>
+        PRZEJDŹ DO LISTY ZAKUPÓW
+      </button>
     </div>
   );
 };

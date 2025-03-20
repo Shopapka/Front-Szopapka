@@ -6,7 +6,11 @@ export interface Families {
 export const DUMMY_FAMILIES: Families[] = [
   { id: "1", name: "Kononowicz", img: "src/components/Dummyfiles/konon.jpg" },
   { id: "2", name: "Jabłonowski", img: "src/components/Dummyfiles/jablon.jpg" },
-  { id: "1", name: "Kononowicz", img: "src/components/Dummyfiles/konon.jpg" },
+  {
+    id: "1",
+    name: "Kononowicz",
+    img: "src/components/Dummyfiles/konon.jpg",
+  },
   { id: "2", name: "Jabłonowski", img: "src/components/Dummyfiles/jablon.jpg" },
   { id: "1", name: "Kononowicz", img: "src/components/Dummyfiles/konon.jpg" },
   { id: "2", name: "Jabłonowski", img: "src/components/Dummyfiles/jablon.jpg" },

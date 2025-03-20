@@ -1,21 +1,56 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-.dashboard ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  height: 100%;
-  overflow-y: scroll;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  background-color: var(--dark-background);
+  color: var(--text);
 }
 
-.dashboard ul li {
-  flex: 1 1 calc(33% - 16px);
-  max-width: calc(33.333% - 16px);
+.dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 80%;
+  margin-bottom: 20px;
+}
+
+.dashboard__welcome {
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+.dashboard__add-button {
+  background-color: var(--dark-blue-theme);
+  color: var(--text);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard__add-button:hover {
+  background-color: var(--dark-blue-theme-hover);
+}
+
+.dashboard__list {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 250px));
+  gap: 16px;
+  width: 100%;
+  max-width: 80%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.dashboard__list-item {
+  display: flex;
+  justify-content: center;
 }

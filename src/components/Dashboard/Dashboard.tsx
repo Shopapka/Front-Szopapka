@@ -13,16 +13,23 @@ const Dashboard = () => {
     await signOut(auth);
     navigate("/login");
   };
+
   const addFamily = () => {};
+
   return (
     <div className="dashboard">
-      <p>Welcome, {user?.email}</p>
-      {/* <button onClick={handleLogout}>Logout</button>*/}
-      <button onClick={addFamily}>Add a family</button>
-      <ul>
+      <div className="dashboard__header">
+        <p className="dashboard__welcome">
+          Witaj, {user?.email}. Oto twoja lista rodzin:
+        </p>
+        <button className="dashboard__add-button" onClick={addFamily}>
+          Dodaj rodzinę
+        </button>
+      </div>
+      <ul className="dashboard__list">
         {DUMMY_FAMILIES.map((family, index) => (
-          <li key={index}>
-            <Card nazwa={family.name} img={family.img} id={family.id}></Card>
+          <li className="dashboard__list-item" key={index}>
+            <Card nazwa={family.name} img={family.img} id={family.id} />
           </li>
         ))}
       </ul>
