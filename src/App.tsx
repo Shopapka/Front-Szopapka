@@ -9,6 +9,7 @@ import Login from "./components/UserStuff/Login";
 import Register from "./components/UserStuff/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import Header from "./components/header/header";
 import ShoppingList from "./components/ShoppingList/ShoppingList";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
@@ -22,9 +23,11 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
+        <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
           <Route
             path="/dashboard"
             element={
@@ -33,6 +36,34 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/blog"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/grupy"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/faq"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/shoppinglist"
             element={
