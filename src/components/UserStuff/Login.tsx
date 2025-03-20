@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 import "./Auth.css";
 
 const Login = () => {
@@ -14,7 +14,17 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Get the JWT token
+      const token = await user.getIdToken();
+      console.log("JWT Token:", token);
+
       navigate("/dashboard");
     } catch (err: any) {
       setError(err.message);
