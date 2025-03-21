@@ -4,10 +4,17 @@
     --header_padding_right: 10%;
     --light_blue_theme_color: #459fff;
     --super_light_blue_theme_color: #a1ceff;
-    --grey_theme_color: #1f1f1f;;
+    --super_light_blue_theme_color_with_op: rgba(161,206,255,0.4);
+    --red_theme_color: #b00101;
+    --dark_red_theme_color: #8b0000;
+    --blue_theme_color: #007bff;
+    --blue_hover_theme_color: #0056b3;
+    --grey_theme_color: #1f1f1f;
     --height_menu_phone: 0px;
     
 }
+
+
 
 .header_banner
 {
@@ -48,8 +55,7 @@
 {
     display: inline-block;
     width: auto;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-right: 40px;
     
 }
 
@@ -62,6 +68,7 @@
 {
     transition: all 0.5s ease-in-out;
     color: var(--light_blue_theme_color);
+    text-decoration: underline;
     
 }
 

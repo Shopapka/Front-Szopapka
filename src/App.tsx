@@ -10,6 +10,8 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
+import ShopListItem from "./components/shop_list_item/shop_list_item";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -67,6 +69,11 @@ const App = () => {
 
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
+        <div className="test"><ShopListItem itemName='Piwo jasne Żywiec' quantity='5' state='0'/></div>
+        <div className="test"><ShopListItem itemName='Piwo jasne Żywiec' quantity='5' state='1' buyerName='John' buyerSurname='Ligma' buyerID='0' currentUserID='1'/></div>
+        <div className="test"><ShopListItem itemName='Piwo jasne Żywiec' quantity='5' state='2'/></div>
+        <div className="test"><ShopListItem itemName='Piwo jasne Żywiec' quantity='5' state='1' buyerName='John' buyerSurname='Ligma' buyerID='0' currentUserID='0'/></div>
+        <Footer/>
       </Router>
     </AuthProvider>
   );
