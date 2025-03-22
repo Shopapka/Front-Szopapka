@@ -18,15 +18,15 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Logowanie do Azure Container Registry
-        run: az acr login --name szopapka-acr
+        run: az acr login --name szopapkaacr
 
       - name: Budowanie i pushowanie obrazu Dockera
         run: |
-          docker build -t szopapka-acr.azurecr.io/frontend:latest .
-          docker push szopapka-acr.azurecr.io/frontend:latest
+          docker build -t szopapkaacr.azurecr.io/frontend:latest .
+          docker push szopapkaacr.azurecr.io/frontend:latest
 
       - name: Aktualizacja ACA
         run: az containerapp update \
           --name frontend \
           --resource-group szopapka-rg \
-          --image szopapka-acr.azurecr.io/frontend:latest
+          --image szopapkaacr.azurecr.io/frontend:latest
