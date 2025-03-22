@@ -26,7 +26,8 @@ jobs:
           docker push szopapkaacr.azurecr.io/frontend:latest
 
       - name: Aktualizacja ACA
-        run: az containerapp update \
-          --name frontend \
-          --resource-group szopapka-rg \
-          --image szopapkaacr.azurecr.io/frontend:latest
+        run: | 
+          az containerapp update \
+            --name frontend \
+            --resource-group szopapka-rg \
+            --image szopapkaacr.azurecr.io/frontend:latest
