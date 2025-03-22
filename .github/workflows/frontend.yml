@@ -1,0 +1,32 @@
+name: CI/CD Frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kodu
+        uses: actions/checkout@v4
+
+      - name: Logowanie do Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Logowanie do Azure Container Registry
+        run: az acr login --name szopapkaacr
+
+      - name: Budowanie i pushowanie obrazu Dockera
+        run: |
+          docker build -t szopapkaacr.azurecr.io/frontend:latest .
+          docker push szopapkaacr.azurecr.io/frontend:latest
+
+      - name: Aktualizacja ACA
+        run: az containerapp update \
+          --name frontend \
+          --resource-group szopapka-rg \
+          --image szopapkaacr.azurecr.io/frontend:latest
