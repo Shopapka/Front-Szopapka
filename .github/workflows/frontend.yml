@@ -1,4 +1,4 @@
-name: CI/CD Frontend
+name: Deploy Frontend to Azure App Service
 
 on:
   push:
@@ -6,28 +6,27 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout kodu
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Logowanie do Azure
-        uses: azure/login@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          node-version: 18
+          cache: 'npm'
 
-      - name: Logowanie do Azure Container Registry
-        run: az acr login --name szopapkaacr
+      - name: Install dependencies
+        run: npm install
 
-      - name: Budowanie i pushowanie obrazu Dockera
-        run: |
-          docker build -t szopapkaacr.azurecr.io/frontend:latest .
-          docker push szopapkaacr.azurecr.io/frontend:latest
+      - name: Build project
+        run: npm run build
 
-      - name: Aktualizacja ACA
-        run: | 
-          az containerapp update \
-            --name frontend \
-            --resource-group szopapka-rg \
-            --image szopapkaacr.azurecr.io/frontend:latest
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'szopapka-frontend'
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: 'dist'
