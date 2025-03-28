@@ -1,0 +1,120 @@
+.shop_list_item_outer
+{
+    width: 86%;
+    margin-left: 5%;
+    border-radius: 15px;
+    border: 1px solid;
+    padding: 2%;
+    margin-bottom: 15px;
+}
+
+.shop_list_item_not_mine
+{
+    opacity: 0.4;
+    border-color: var(--super_light_blue_theme_color);
+    border-width: 3px;
+}
+
+.shop_list_item-bought
+{
+    border-color: var(--super_light_blue_theme_color_with_op);
+    border-width: 3px;
+    
+}
+
+.shop_list_item-bought .shop_list_item_info
+{
+    opacity: 0.4;
+}
+
+.shop_list_item-bought .shop_list_item_button
+{
+    background-color: var(--red_theme_color);
+    border: none;
+}
+
+.shop_list_item-bought .shop_list_item_button:hover
+{
+    background-color: var(--dark_red_theme_color);
+    border: none; 
+}
+
+.shop_list_item-mine
+{
+    border-color: var(--blue_theme_color);
+    border-width: 3px;
+    box-shadow: -1px 0px 10px 3px var(--super_light_blue_theme_color_with_op);
+}
+
+.shop_list_item-mine .shop_list_item_button
+{
+    background-color: #006d07;
+    border: none;
+}
+
+.shop_list_item-mine .shop_list_item_button:hover
+{
+    background-color: #005d06;
+    border: none;
+}
+
+.shop_list_item-bought .shop_list_item_info p
+{
+    text-decoration: line-through !important; 
+}
+
+.shop_list_item-toDO
+{
+    border-color: var(--super_light_blue_theme_color);
+    border-width: 3px;
+}
+
+.shop_list_item_buyer
+{
+    font-size: 1.2rem;
+    color: var(--super_light_blue_theme_color);
+}
+
+.shop_list_item_status p
+{
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--super_light_blue_theme_color)
+}
+
+.shop_list_item_data
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.shop_list_item_button
+{
+    background-color: var(--blue_theme_color);
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.shop_list_item_button:hover
+{
+    background-color: var(--blue_hover_theme_color);
+}
+
+.test
+{
+    width: 50%;
+    margin-left: 25%;
+}
+
+.shop_list_item_info
+{
+    min-width: 40%;
+}
+
+.shop_list_item_info p
+{
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
