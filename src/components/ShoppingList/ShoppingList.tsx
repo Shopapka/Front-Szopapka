@@ -1,6 +1,8 @@
 import { useLocation } from "react-router-dom";
 
 import { useState } from "react";
+import ShopListItem from "../shop_list_item/shop_list_item";
+import "./ShoppingList.css";
 interface ShoppingItem {
   id: String;
   id_rodziny: String;
@@ -43,18 +45,31 @@ const ShoppingList = () => {
   };
 
   return (
-    <div>
+    <div className="item-container">
       <h1>
         Shopping List for {nazwa}, id {id}
       </h1>
-      {DUMMY_SHOPPING_ITEMS.filter((item) => item.id_rodziny === id).map(
-        (item, index) => (
-          <div key={index}>
-            <p>{item.nazwa}</p>
-            <p>{item.data}</p>
-          </div>
-        )
-      )}
+      <div className="item-list">
+        {DUMMY_SHOPPING_ITEMS.filter((item) => item.id_rodziny === id).map(
+          (item, index) => (
+            <ShopListItem
+              itemID={item.id}
+              itemName={item.nazwa}
+              quantity={item.data}
+              state={0}
+              buyerName=""
+              buyerSurname=""
+              buyerID="chujwie"
+              currentUserID="tezchujwie"
+            ></ShopListItem>
+
+            // <div key={index}>
+            //   <p>{item.nazwa}</p>
+            //   <p>{item.data}</p>
+            // </div>
+          )
+        )}
+      </div>
     </div>
   );
 };

@@ -13,6 +13,7 @@ import Header from "./components/header/header";
 import ShoppingList from "./components/ShoppingList/ShoppingList";
 import Footer from "./components/footer/footer";
 import ShopListItem from "./components/shop_list_item/shop_list_item";
+import { getAuth } from "firebase/auth";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -76,10 +77,10 @@ const App = () => {
           ></Route>
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-        <div className="test">
+        {/* <div className="test">
           <ShopListItem itemName="Piwo jasne Żywiec" quantity="5" state="0" />
-        </div>
-        <div className="test">
+        </div> */}
+        {/* <div className="test">
           <ShopListItem
             itemName="Piwo jasne Żywiec"
             quantity="5"
@@ -103,7 +104,7 @@ const App = () => {
             buyerID="0"
             currentUserID="0"
           />
-        </div>
+        </div> */}
         <Footer />
       </Router>
     </AuthProvider>

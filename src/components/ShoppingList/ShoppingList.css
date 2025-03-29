@@ -1,0 +1,8 @@
+.item-container {
+  display: flex;
+}
+.item-list {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}

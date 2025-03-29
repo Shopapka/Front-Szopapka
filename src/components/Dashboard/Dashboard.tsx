@@ -16,23 +16,25 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [families, setFamilies] = useState<Family[]>([]);
   const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [isJoining, setIsJoining] = useState<boolean>(false);
+  const [joinCode, setJoinCode] = useState<string>("");
   const [newFamilyName, setNewFamilyName] = useState<string>("");
   const [newFamilyImg, setNewFamilyImg] = useState<File | null>(null);
 
-  useEffect(() => {
-    const fetchFamilies = async () => {
-      try {
-        const response = await fetch("api/jakies");
-        if (!response.ok) {
-          throw new Error("serwer krzyczy ze nie jest ok :(");
-        }
-        const data: Family[] = await response.json();
-        setFamilies(data);
-      } catch (error) {
-        console.error("nie udalo sie zlapac rodzin :(", error);
+  const fetchFamilies = async () => {
+    try {
+      const response = await fetch("api/jakies");
+      if (!response.ok) {
+        throw new Error("serwer krzyczy ze nie jest ok :(");
       }
-    };
+      const data: Family[] = await response.json();
+      setFamilies(data);
+    } catch (error) {
+      console.error("nie udalo sie zlapac rodzin :(", error);
+    }
+  };
 
+  useEffect(() => {
     fetchFamilies();
   }, []);
 
@@ -49,7 +51,38 @@ const Dashboard = () => {
       setNewFamilyImg(e.target.files[0]);
     }
   };
+  const handleJoinCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setJoinCode(e.target.value);
+  };
+  const handleJoinFamily = async () => {
+    if (!joinCode) {
+      console.error("Kod dołączenia jest wymagany");
+      return;
+    }
 
+    try {
+      const response = await fetch("/api/rodziny/join", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ joinCode }),
+      });
+
+      if (!response.ok) {
+        setJoinCode("Failed to join family");
+
+        throw new Error("Nie udało się dołączyć do rodziny");
+      }
+
+      await fetchFamilies();
+
+      setJoinCode("");
+      setIsJoining(false);
+    } catch (error) {
+      console.error("Nie udało się dołączyć do rodziny", error);
+    }
+  };
   const handleAddFamily = async () => {
     if (!newFamilyName || !newFamilyImg) return;
 
@@ -95,8 +128,37 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard__header">
-        <p className="dashboard__label"></p>
+        {isJoining ? (
+          <>
+            <input
+              type="text"
+              placeholder="Wpisz kod dołączenia"
+              value={joinCode}
+              onChange={handleJoinCodeChange}
+              className="card__input"
+            />
+            <div className="flex-bruh">
+              <button className="card__button" onClick={handleJoinFamily}>
+                DOŁĄCZ
+              </button>
+              <button
+                className="card__button card__button--red"
+                onClick={() => setIsJoining(false)}
+              >
+                Anuluj
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="dashboard__label">Masz kod dołączenia? Dołącz:</p>
+            <button className="card__button" onClick={() => setIsJoining(true)}>
+              DOŁĄCZ
+            </button>
+          </>
+        )}
       </div>
+
       <ul className="dashboard__list">
         <li className="dashboard__list-item">
           {isAdding ? (
@@ -114,9 +176,17 @@ const Dashboard = () => {
                 onChange={handleFileChange}
                 className="card__input"
               />
-              <button className="card__button" onClick={handleAddFamily}>
-                Dodaj rodzinę
-              </button>
+              <div className="flex-bruh">
+                <button className="card__button" onClick={handleAddFamily}>
+                  Dodaj rodzinę
+                </button>
+                <button
+                  className="card__button card__button--red"
+                  onClick={() => setIsAdding(false)}
+                >
+                  Cofnij
+                </button>
+              </div>
             </div>
           ) : (
             <div className="card card--add" onClick={handleAddClick}>

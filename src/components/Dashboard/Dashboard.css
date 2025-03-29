@@ -10,9 +10,9 @@
 
 .dashboard__header {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
   align-items: center;
-  width: 100%;
+  width: 70%;
   max-width: 100%;
   margin-bottom: 20px;
 }
@@ -49,7 +49,11 @@
   margin: 0;
   overflow-y: auto;
 }
-
+.dashboard__label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .dashboard__list-item {
   display: flex;
   justify-content: center;
@@ -100,4 +104,18 @@
   background-color: var(--dark-background);
   color: var(--text);
   font-size: 1rem;
+}
+.flex-bruh {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card__button--red {
+  margin-left: auto;
+  background-color: var(--cancel);
+}
+.card__button--red:hover {
+  background-color: var(--cancel-hover);
 }
