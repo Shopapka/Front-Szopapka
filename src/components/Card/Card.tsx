@@ -6,7 +6,7 @@ export const Card = (props: any) => {
 
   const onShoppingListClick = () => {
     console.log("Shopping list clicked");
-    navigate("/shoppingList", { state: { nazwa: props.nazwa, id: props.id } });
+    navigate("/shoppingList", { state: { nazwa: props.nazwa, id: props.id, img: props.img } });
   };
 
   return (
