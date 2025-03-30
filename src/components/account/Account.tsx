@@ -7,13 +7,26 @@ import { inView, stagger } from "motion";
 import shop from "../../assets/shop.png"
 import { MdHeight } from "react-icons/md";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 
 const Account = () => {
 
     let name:any = "Imie";
     let surname:any = "Nazwisko";
+    const navigate = useNavigate();
 
+    const hadleLogOut = async() =>
+    {
+        try {
+            await signOut(auth);
+            navigate("/login");
+        }catch(error)
+        {
+            console.log(error);
+        }
+    }
     
     return(
         <div className="Account">
@@ -34,7 +47,7 @@ const Account = () => {
                         at lacinia massa ullamcorper quis. Nullam ipsum lectus, pretium non quam ut, 
                         sagittis vehicula dolor. Etiam porta commodo arcu, ut pellentesque nisi eleifend sit amet. 
                         Integer commodo nibh ipsum, faucibus vestibulum nibh vehicula non. Sed blandit tempus rhoncus.</p>
-                    <button className="button_log_out">Wyloguj</button>
+                    <button className="button_log_out" onClick={hadleLogOut}>Wyloguj</button>
                 </div>
                 <div className="account_info_right">
                     <img src={shop} alt="shop"/>
@@ -53,19 +66,19 @@ const Account = () => {
                 <div className="offert">
                     <div className="offert_item">
                         <h3>Twoje rodziny</h3>
-                        <Link to="#">Więcej tutaj <IoIosArrowRoundForward /></Link>
+                        <Link to="/dashboard">Więcej tutaj <IoIosArrowRoundForward /></Link>
                         <p>Rodzina to podstawa naszej strony. Dodaj rodziny i zamień zakupy w przyjemność</p>
                     </div>
 
                     <div className="offert_item">
                         <h3>Pamiętaj o listach zakupów</h3>
-                        <Link to="#">Więcej tutaj <IoIosArrowRoundForward /></Link>
+                        <Link to="/dashboard">Więcej tutaj <IoIosArrowRoundForward /></Link>
                         <p>Sprawdzaj czy inni ludzie kupili, przypisuj się do kupienia rzeczy i dodawaj zapotrzebowanie na nowe produkty</p>
                     </div>
 
                     <div className="offert_item">
                         <h3>FAQ</h3>
-                        <Link to="#">Więcej tutaj <IoIosArrowRoundForward /></Link>
+                        <Link to="/faq">Więcej tutaj <IoIosArrowRoundForward /></Link>
                         <p>Wciąż masz pytania? Zajrzyj do naszego FAQ i rozwiej je wszystkie</p>
                     </div>
                 </div>
