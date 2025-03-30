@@ -94,6 +94,10 @@ const Dashboard = () => {
     }
   };
 
+  function handleFamilyJoining()
+  {
+
+  }
 
   return (
     <div className="dashboard_big">
@@ -152,6 +156,14 @@ const Dashboard = () => {
           <p className="dashboard__label"> Twoje rodziny</p>
         </div>
 
+        <motion.div className="dashboard_join_family"
+          initial={{opacity: 0}}
+          whileInView={{opacity: 1}}
+          transition={{duration: 0.3}}
+        >
+          <input type="text" placeholder="Podaj Kod" id="family_code_id" className="family_input_code"/>
+          <button onClick={handleFamilyJoining} className="join_family_button">Dołącz do rodziny</button>
+        </motion.div>
         <ul className="dashboard__list">
           {families.length
             ? families.map((family, index) => (

@@ -18,4 +18,5 @@ body, html
 {
   overflow-x: hidden;
   position: relative;
+  box-sizing: border-box;
 }
