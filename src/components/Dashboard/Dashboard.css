@@ -2,10 +2,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   padding: 20px;
   background-color: var(--dark-background);
   color: var(--text);
+  
+  width: var(--padding-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboard_big
+{
+  width: 100%;
 }
 
 .dashboard__header {
@@ -13,7 +21,6 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 100%;
   margin-bottom: 20px;
 }
 
@@ -27,7 +34,6 @@
   color: var(--text);
   border: none;
   padding: 10px 16px;
-  border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease;
@@ -43,11 +49,152 @@
   grid-template-columns: repeat(auto-fit, minmax(230px, 250px));
   gap: 16px;
   width: 100%;
-  max-width: 80%;
   list-style: none;
   padding: 0;
   margin: 0;
   overflow-y: auto;
+}
+
+.spacer
+{
+  width: 100%;
+  height: 100px;
+}
+
+.family_form_outside
+{
+  background-color: #101010;
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+
+.dashboard__label
+{
+  font-size: 1.8rem;
+  color: var(--super_light_blue_theme_color);
+  text-align: center;
+  width: 100%;
+  margin: 0px;
+  padding-top: 20px;
+}
+
+.family_form_inside
+{
+  display: grid;
+  grid-template-columns: auto auto;
+  width: var(--padding-width);
+  margin-left: auto;
+  margin-right: auto;
+  
+  
+}
+
+@media screen and (max-width: 768px)
+{
+  .family_form_inside
+  {
+    grid-template-columns: auto !important;
+  }
+  .family_form_explenations div
+  {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+}
+
+.family_form_explenations
+{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  justify-content: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  min-height: 300px;
+  align-items: center;
+  display: flex;
+  border-top: 2px solid var(--super_light_blue_theme_color);
+  border-left: 2px solid var(--super_light_blue_theme_color);
+}
+
+.family_form_explenations p
+{
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+}
+
+.form_add_family
+{
+  width: 100%;
+}
+
+.form_add_family .form-file-input
+{
+  padding: 0px;
+  width: 100%;
+}
+
+.form_add_family .form-file-input::-webkit-file-upload-button
+{
+  background-color: #101010;
+  border: 2px solid var(--light_blue_theme_color);
+  color: #bbb;
+  padding: 10px 20px 10px 20px;
+}
+
+.form_add_family label
+{
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  display: inline-block;
+  font-weight: 400;
+}
+
+.form_add_family input
+{
+  padding: 10px 1% 10px 1%;
+  color: #bbb;
+  border: 1px solid #bbb;
+  background-color: rgba(0,0,0,0);
+  width: 98%;
+  margin-bottom: 15px;
+}
+
+.form_add_family button
+{
+  padding: 10px 20px 10px 20px;
+  color: white;
+  background-color: var(--light_blue_theme_color);
+  border: none;
+  margin-left: auto;
+  display: block;
+}
+
+.special_p
+{
+  margin-top: 30px !important;
+}
+
+.family_form_explenations h2
+{
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  color: var(--super_light_blue_theme_color);
+  word-spacing: 1px;
+}
+
+.family_form_form
+{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 80%;
+  padding-left: 10%;
+  padding-right: 10%;
+  border-bottom: 2px solid var(--super_light_blue_theme_color);
+  border-right: 2px solid var(--super_light_blue_theme_color);
+
 }
 
 .dashboard__list-item {
