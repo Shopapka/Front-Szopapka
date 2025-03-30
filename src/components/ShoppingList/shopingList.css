@@ -105,3 +105,76 @@
     display: none !important;
   }
 }
+
+
+
+.family_add_item_form
+{
+ border-bottom: 2px solid var(--super_light_blue_theme_color); 
+ padding-bottom: 20px;
+
+}
+
+.family_add_item_form form
+{
+  padding-top: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.family_add_item_form label
+{
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  display: inline-block;
+  font-weight: 400;
+} 
+
+.family_add_item_form input
+{
+  width: 90%;
+  padding: 10px 1% 10px 1%;
+  color: #bbb;
+  border: 1px solid #bbb;
+  background-color: rgba(0,0,0,0);
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.family_add_item_form button
+{
+  padding: 10px 40px 10px 40px;
+  color: white;
+  background-color: var(--light_blue_theme_color);
+  border: none;
+  display: block;
+  transition: all 0.1s ease-in-out;
+  margin-top: 10px;
+}
+
+.family_add_item_form button:hover
+{
+  background-color: var(--blue_theme_color);
+}
+
+.width-50-big
+{
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.inline-block
+{
+  display: inline-block;
+}
+
+@media screen and (max-width: 768px)
+{
+  .family_add_item
+  {
+    width: 98%;
+    margin-left: 1%;
+  }
+  
+}

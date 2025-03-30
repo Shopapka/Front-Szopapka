@@ -2,13 +2,16 @@
 {
     width: 100%;
     box-sizing: border-box;
-    padding: 25px 15px 25px 15px;
-    margin-bottom: 20px;
-    border: 2px solid #bbb;
-    border-radius: 15px;
     position: relative;
 }
 
+.border_grey
+{
+    margin-bottom: 20px;
+    border: 2px solid #bbb;
+    border-radius: 15px;
+    padding: 25px 15px 25px 15px;
+}
 
 .faq_item_header
 {

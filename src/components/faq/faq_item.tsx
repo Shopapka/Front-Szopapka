@@ -14,9 +14,15 @@ function FaqItem(props: any)
     let dateTime = new Date()
     let pos_id:any = dateTime.getTime();
     let delay:number = 0;
+    let additional = '';
     if('delay' in props)
     {
         delay += props.delay;
+    }
+
+    if('additionalClass' in props)
+    {
+        additional = props.additionalClass;
     }
 
     function showFaqcontent()
@@ -41,7 +47,7 @@ function FaqItem(props: any)
     }
 
     return(
-    <motion.div className="faq_item_outer"
+    <motion.div className={"faq_item_outer " + additional}
         initial={{opacity: 0, x: -20}}
         animate={{opacity: 1, x: 0}}
         transition={{duration: 0.08, delay: delay*0.08}}>

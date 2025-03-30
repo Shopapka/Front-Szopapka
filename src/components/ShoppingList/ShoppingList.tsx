@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "./shopingList.css"
 import { IoIosArrowRoundForward } from "react-icons/io";
+import FaqItem from "../faq/faq_item";
 
 import { useState } from "react";
 import { motion } from "motion/react";
@@ -51,6 +52,21 @@ const ShoppingList = () => {
     );
   };
 
+  let add_title:any = 'Dodaj produkt';
+  let add_content:any = <form>
+    <div className="width-50-big inline-block">
+      <label htmlFor="add_item_name">Nazwa produktu</label>
+      <input type="text" placeholder="Podaj nazwę produktu" required id="add_item_name"/>
+    </div>
+    <div className="width-50-big inline-block">
+      <label htmlFor="add_item_name">Ilość</label>
+      <input type="number" placeholder="Podaj ilość" required id="add_item_quantity"/>
+    </div>
+
+    <button type="submit">Dodaj produkt</button>
+
+  </form>;
+
   return (
     <div>
       <div className="family_data">
@@ -79,9 +95,13 @@ const ShoppingList = () => {
 
       </div>
 
+      
+
       <div className="family_shopping_list">
           <h2> Wasza lista zakupów </h2>
-
+          <div className="family_add_item">
+            <FaqItem title={add_title} content={add_content} delay={0.2} additionalClass={"family_add_item_form"}/>
+          </div>
       </div>
 
       {DUMMY_SHOPPING_ITEMS.filter((item) => item.id_rodziny === id).map(

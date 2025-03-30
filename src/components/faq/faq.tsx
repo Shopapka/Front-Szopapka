@@ -87,7 +87,7 @@ const Faq = () => {
 
             <div className="faq_items">
                 {contens.map((cont, index) =>
-                <FaqItem title={titles[index]} content={cont} delay={index}/>)}
+                <FaqItem title={titles[index]} content={cont} delay={index} additionalClass={"border_grey"}/>)}
             </div>
 
         </div>
