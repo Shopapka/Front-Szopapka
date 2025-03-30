@@ -168,11 +168,9 @@ const Dashboard = () => {
           {families.length
             ? families.map((family, index) => (
                 <motion.li className="dashboard__list-item" key={family.id}
-                  initial={{opacity: 0, y: 20}}
-                  animate={{opacity: 1, y: 0}}
-                  transition={{duration: 0.2, delay: index*0.2}}
-                
-                >
+                  initial={{opacity: 0, x: -20}}
+                  animate={{opacity: 1, x: 0}}
+                  transition={{duration: 0.1, delay: index*0.1}}>
                   <Card nazwa={family.name} img={family.img} id={family.id} />
                 </motion.li>
               ))

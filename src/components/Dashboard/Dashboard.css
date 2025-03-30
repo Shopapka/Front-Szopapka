@@ -118,6 +118,16 @@
     margin-left: 5%;
   }
 
+  .family_form_form
+  {
+    border: none !important;
+  }
+
+  .family_form_explenations
+  {
+    border: none !important;
+  }
+
 }
 
 .family_form_explenations

@@ -14,6 +14,7 @@ import ShoppingList from "./components/ShoppingList/ShoppingList";
 import Footer from "./components/footer/footer";
 import ShopListItem from "./components/shop_list_item/shop_list_item";
 import Account from "./components/account/Account"
+import Faq from "./components/faq/faq";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -62,7 +63,7 @@ const App = () => {
             path="/faq"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Faq />
               </ProtectedRoute>
             }
           />
