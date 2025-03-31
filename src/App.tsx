@@ -13,6 +13,8 @@ import Header from "./components/header/header";
 import ShoppingList from "./components/ShoppingList/ShoppingList";
 import Footer from "./components/footer/footer";
 import ShopListItem from "./components/shop_list_item/shop_list_item";
+import Account from "./components/account/Account"
+import Faq from "./components/faq/faq";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { user, loading } = useAuth();
@@ -61,7 +63,7 @@ const App = () => {
             path="/faq"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Faq />
               </ProtectedRoute>
             }
           />
@@ -74,36 +76,18 @@ const App = () => {
               </ProtectedRoute>
             }
           ></Route>
+
+          <Route
+            path="/account"
+            element={
+              <ProtectedRoute>
+                <Account />
+              </ProtectedRoute>
+            }
+          ></Route>
+
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-        <div className="test">
-          <ShopListItem itemName="Piwo jasne Żywiec" quantity="5" state="0" />
-        </div>
-        <div className="test">
-          <ShopListItem
-            itemName="Piwo jasne Żywiec"
-            quantity="5"
-            state="1"
-            buyerName="John"
-            buyerSurname="Ligma"
-            buyerID="0"
-            currentUserID="1"
-          />
-        </div>
-        <div className="test">
-          <ShopListItem itemName="Piwo jasne Żywiec" quantity="5" state="2" />
-        </div>
-        <div className="test">
-          <ShopListItem
-            itemName="Piwo jasne Żywiec"
-            quantity="5"
-            state="1"
-            buyerName="John"
-            buyerSurname="Ligma"
-            buyerID="0"
-            currentUserID="0"
-          />
-        </div>
         <Footer />
       </Router>
     </AuthProvider>

@@ -5,4 +5,18 @@
   --grey-border: #333;
   --dark-blue-theme: #00448d;
   --dark-blue-theme-hover: #0053ac;
+  --padding-width: min(100%, 1140px);
+}
+
+html
+{
+  width: 100%;
+  margin-top: 60px;
+}
+
+body, html
+{
+  overflow-x: hidden;
+  position: relative;
+  box-sizing: border-box;
 }

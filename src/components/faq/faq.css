@@ -1,0 +1,43 @@
+.faq_main
+{
+    width: var(--padding-width);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    margin-top: 60px;
+    overflow: hidden;
+}
+
+.faq_titile
+{
+    color: var(--super_light_blue_theme_color);
+    text-align: center;
+    width: 100%;
+    font-size: 1.8rem;
+}
+
+.faq_explenations
+{
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 60px;
+}
+
+.faq_items
+{
+    width: 80%;
+    box-sizing: border-box;
+    margin-left: 10%;
+}
+
+@media screen and (max-width: 768px)
+{
+    .faq_items
+    {
+        width: 90% !important;
+        margin-left: 5% !important;
+    }  
+}

@@ -4,11 +4,14 @@ import { useEffect, useState, ChangeEvent, Key } from "react";
 import { Card } from "../Card/Card";
 import "./Dashboard.css";
 import { DUMMY_FAMILIES } from "../Dummyfiles/DUMMY.FAMILIES";
+import { animate, motion, useInView } from "motion/react";
+import { inView, stagger } from "motion";
 
 interface Family {
   id: Key;
   name: string;
   img: string;
+  code: string
 }
 
 const Dashboard = () => {
@@ -92,53 +95,96 @@ const Dashboard = () => {
     }
   };
 
+  function handleFamilyJoining()
+  {
+
+  }
+
   return (
-    <div className="dashboard">
-      <div className="dashboard__header">
-        <p className="dashboard__label"></p>
-      </div>
-      <ul className="dashboard__list">
-        <li className="dashboard__list-item">
-          {isAdding ? (
-            <div className="card card--form">
-              <input
-                type="text"
-                placeholder="Nazwa rodziny"
-                value={newFamilyName}
-                onChange={handleNameChange}
-                className="card__input"
-              />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="card__input"
-              />
-              <button className="card__button" onClick={handleAddFamily}>
-                Dodaj rodzinę
-              </button>
-            </div>
-          ) : (
-            <div className="card card--add" onClick={handleAddClick}>
-              <div className="card__image-container card__image-container--add">
-                <span className="card__plus">➕</span>
+    <div className="dashboard_big">
+      <div className="family_form_outside">
+        <div className="family_form_inside">
+            
+            <motion.div className="family_form_explenations"
+            initial={{opacity: 0, x: -20}}
+            whileInView={{opacity: 1, x: 0}}
+            transition={{duration: 0.3}}
+            >
+              <div>
+                <h2> Jak dodać nową rodzinę? </h2>
+                <p> 1. Wybierz wspaniałą nazwę dla twojej rodziny </p>
+                <p> 2. Dodaje zdjęcie </p>
+                <p> 3. Kliknij przycisk Dodaj rodzinę </p>
+                <p className="special_p"> I już możesz cieszyć się własną rodziną 😎 To takie proste!</p>
               </div>
-              <h2 className="card__title">Dodaj rodzinę</h2>
-            </div>
-          )}
-        </li>
-        {families.length
-          ? families.map((family) => (
-              <li className="dashboard__list-item" key={family.id}>
-                <Card nazwa={family.name} img={family.img} id={family.id} />
-              </li>
-            ))
-          : DUMMY_FAMILIES.map((family, index) => (
-              <li className="dashboard__list-item" key={index}>
-                <Card nazwa={family.name} img={family.img} id={family.id} />
-              </li>
-            ))}
-      </ul>
+            </motion.div>
+
+            <motion.div className="family_form_form"
+              initial={{opacity: 0, x: 20}}
+              whileInView={{opacity: 1, x: 0}}
+              transition={{duration: 0.3}}
+            >
+              
+              <form className="form_add_family">
+              <label> Nazwa rodziny</label>
+                <input
+                  type="text"
+                  placeholder="Podaj nazwę rodziny"
+                  value={newFamilyName}
+                  onChange={handleNameChange}
+                  
+                />
+                <label> Wybierz Plik </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="form-file-input"
+                  onChange={handleFileChange}
+              
+                />
+                <button onClick={handleAddFamily}>
+                  Dodaj rodzinę
+                </button>
+
+              </form>
+            
+            </motion.div>
+        </div>
+       </div>
+  
+      <div className="dashboard">
+        <div className="dashboard__header">
+          <p className="dashboard__label"> Twoje rodziny</p>
+        </div>
+
+        <motion.div className="dashboard_join_family"
+          initial={{opacity: 0}}
+          whileInView={{opacity: 1}}
+          transition={{duration: 0.3}}
+        >
+          <input type="text" placeholder="Podaj Kod" id="family_code_id" className="family_input_code"/>
+          <button onClick={handleFamilyJoining} className="join_family_button">Dołącz do rodziny</button>
+        </motion.div>
+        <ul className="dashboard__list">
+          {families.length
+            ? families.map((family, index) => (
+                <motion.li className="dashboard__list-item" key={family.id}
+                  initial={{opacity: 0, x: -20}}
+                  animate={{opacity: 1, x: 0}}
+                  transition={{duration: 0.1, delay: index*0.1}}>
+                  <Card nazwa={family.name} img={family.img} id={family.id} />
+                </motion.li>
+              ))
+            : DUMMY_FAMILIES.map((family, index) => (
+                <motion.li className="dashboard__list-item" key={index}
+                  initial={{opacity: 0, x: -20}}
+                  animate={{opacity: 1, x: 0}}
+                  transition={{duration: 0.1, delay: index*0.1}}>
+                  <Card nazwa={family.name} img={family.img} id={family.id} code={family.code} />
+                </motion.li>
+              ))}
+        </ul>
+      </div>
     </div>
   );
 };

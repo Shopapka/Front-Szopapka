@@ -92,8 +92,14 @@
 .shop_list_item_button
 {
     background-color: var(--blue_theme_color);
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    color: white;
 }
 
 .shop_list_item_button:hover

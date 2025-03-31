@@ -25,13 +25,15 @@
 {
     padding-top: 20px;
     padding-bottom: 20px;
-    position: sticky;
+    position: fixed !important;
     padding-left: var(--header_padding_left);
     padding-right: var(--header_padding_right);
     top: 0;
     width: calc(100% - var(--header_padding_left) - var(--header_padding_right));
     display: flex;
     flex-wrap: wrap;
+    height: 20px;
+    z-index: 999;
     background-color: var(--grey_theme_color);
     justify-content: space-between;
     
