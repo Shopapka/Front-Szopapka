@@ -11,6 +11,7 @@ interface Family {
   id: Key;
   name: string;
   img: string;
+  code: string
 }
 
 const Dashboard = () => {
@@ -179,7 +180,7 @@ const Dashboard = () => {
                   initial={{opacity: 0, x: -20}}
                   animate={{opacity: 1, x: 0}}
                   transition={{duration: 0.1, delay: index*0.1}}>
-                  <Card nazwa={family.name} img={family.img} id={family.id} />
+                  <Card nazwa={family.name} img={family.img} id={family.id} code={family.code} />
                 </motion.li>
               ))}
         </ul>

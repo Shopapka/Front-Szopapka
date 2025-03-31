@@ -33,7 +33,7 @@
 .family_data_title
 {
     font-size: 1.8rem;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     color: var(--super_light_blue_theme_color);
 }
 
@@ -43,9 +43,16 @@
     line-height: 2;
 }
 
+.family_data_code
+{
+  font-size: 1.3rem;
+  color: #888;
+  margin-top: 0;
+}
+
 .family_data_members
 {
-    margin-top: 50px;
+    margin-top: 45px;
     width: 95%;
 }
 

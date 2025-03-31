@@ -40,6 +40,7 @@ const ShoppingList = () => {
   const { nazwa } = location.state || {};
   const { id } = location.state || {};
   const {img} = location.state || {};
+  const {code} = location.state || {};
 
   const members = ["Kononowicz", "Jabłonowski", "Sobowtów Kononowicza", "Sobowtór Jabłonowskiego", "John Ligma"];
   const listMembers = members.map((mem, index) =>
@@ -87,6 +88,7 @@ const ShoppingList = () => {
           transition={{duration: 0.4}}
         >
           <p className="family_data_title">Rodzina {nazwa}</p>
+          <p className="family_data_code">Kod dołączenia: {code}</p>
           <p className="family_data_members"> {listMembers} </p>
           <Link to="/faq" className="family_data_link">Masz jakieś pytania? <IoIosArrowRoundForward/></Link>
         </motion.div>
