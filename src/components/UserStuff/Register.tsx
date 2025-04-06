@@ -3,19 +3,38 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import "./Auth.css";
-
+import { apiUrl } from "../../constants/url";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const registerToDatabase = async (email: string) => {
+    const token = await auth.currentUser?.getIdToken();
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    });
+    const response = await fetch(`${apiUrl}/registration/register`, {
+      method: "POST",
+      body: JSON.stringify({ mail: email }),
+      headers: headers,
+      mode: "cors",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error("serwer krzyczy ze nie jest ok :(");
+    }
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      await registerToDatabase(email);
+      await navigate("/dashboard");
     } catch (err: any) {
       setError(err.message);
     }
