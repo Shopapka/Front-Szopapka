@@ -132,7 +132,8 @@ const ShoppingList = () => {
       </div>
       <div className="item-list">
         {DUMMY_SHOPPING_ITEMS.filter((item) => item.id_rodziny === id).map(
-          (item, index) => (
+
+          (item) => (
             <ShopListItem
               itemID={item.id}
               itemName={item.nazwa}
