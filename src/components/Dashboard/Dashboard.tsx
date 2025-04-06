@@ -19,9 +19,12 @@ const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [families, setFamilies] = useState<Family[]>([]);
-  const [isAdding, setIsAdding] = useState<boolean>(false);
   const [newFamilyName, setNewFamilyName] = useState<string>("");
   const [newFamilyImg, setNewFamilyImg] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [familyCode, setFamilyCode] = useState<string>("");
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; //mozna zmienic w razie wu
 
   const fetchFamilies = async () => {
     try {
@@ -32,13 +35,12 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.ok) {
-        throw new Error("serwer krzyczy ze nie jest ok :(");
-      }
+      // if (!response.ok) {
+      //   throw new Error("serwer krzyczy ze nie jest ok :(");
+      // }
       const data: Family[] = await response.json();
       setFamilies(data);
-    } catch (error) {
-      console.error("nie udalo sie zlapac rodzin :(", error);
+    } finally {
     }
   };
 
@@ -46,29 +48,60 @@ const Dashboard = () => {
     fetchFamilies();
   }, []);
 
-  const handleAddClick = () => {
-    setIsAdding(true);
-  };
-
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewFamilyName(e.target.value);
   };
-
+  const handleFamilyCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFamilyCode(e.target.value);
+  };
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setNewFamilyImg(e.target.files[0]);
+      const file = e.target.files[0];
+
+      if (!file.type.startsWith("image/")) {
+        setErrorMessage("Zaznaczony plik nie jest zdjęciem :(");
+        return;
+      }
+
+      if (file.size > MAX_FILE_SIZE) {
+        setErrorMessage(
+          `Rozmiar pliku przekracza ${
+            MAX_FILE_SIZE * ((1 / 1024) * (1 / 1024))
+          } MB :(`
+        );
+        return;
+      }
+
+      setErrorMessage(null);
+      setNewFamilyImg(file);
     }
   };
 
-  const handleAddFamily = async () => {
-    if (!newFamilyName || !newFamilyImg) return;
+  const handleAddFamily = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (!newFamilyName || !newFamilyImg) {
+      setErrorMessage(
+        "Brakuje nazwy lub zdjęcia rodziny (możliwe że zły plik lub rozmiar)"
+      );
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage(null);
 
     try {
       const formData = new FormData();
+      formData.append("familyName", newFamilyName);
       formData.append("image", newFamilyImg);
+
       const token = await auth.currentUser?.getIdToken();
-      console.log(token);
-      const uploadResponse = await fetch("/api/upload", {
+      if (!token) {
+        setErrorMessage("Użytkownik niezalogowany lub zły token użytkownika");
+        return;
+      }
+
+      const response = await fetch(`${apiUrl}/Family/createFamily`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -76,26 +109,45 @@ const Dashboard = () => {
         body: formData,
       });
 
-      if (!uploadResponse.ok) {
-        throw new Error("Image upload failed");
+      if (!response.ok) {
+        const errorText = await response.text();
+        setErrorMessage(`Response error: ${errorText}`);
+        throw new Error("Failed to create family");
       }
 
-      const imageUrl = await uploadResponse.json();
-
-      const newFamily = { name: newFamilyName, img: imageUrl };
-
-      fetchFamilies();
+      const data = await response.json();
+      console.log("Family created:", data);
 
       setNewFamilyName("");
       setNewFamilyImg(null);
-      setIsAdding(false);
     } catch (error) {
-      console.error("Nie udalo sie dodac rodziny :(", error);
+      setErrorMessage("Błąd dodawania rodziny");
+    } finally {
+      fetchFamilies();
+      setIsLoading(false);
     }
   };
 
-  function handleFamilyJoining() {
-    // TODO
+  async function handleFamilyJoining() {
+    const formData = new FormData();
+    formData.append("familyCode", familyCode);
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      console.log(token);
+
+      const response = await fetch(`${apiUrl}/Family/join`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: familyCode,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      fetchFamilies();
+    }
   }
 
   return (
@@ -133,6 +185,7 @@ const Dashboard = () => {
                 placeholder="Podaj nazwę rodziny"
                 value={newFamilyName}
                 onChange={handleNameChange}
+                disabled={isLoading}
               />
               <label> Wybierz Plik </label>
               <input
@@ -140,8 +193,24 @@ const Dashboard = () => {
                 accept="image/*"
                 className="form-file-input"
                 onChange={handleFileChange}
+                disabled={isLoading}
               />
-              <button onClick={handleAddFamily}>Dodaj rodzinę</button>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+              <button
+                type="button"
+                onClick={handleAddFamily}
+                disabled={isLoading}
+                className={isLoading ? "loading-button" : ""}
+              >
+                {isLoading ? (
+                  <div className="loading-spinner">
+                    <div className="spinner"></div>
+                    <span>Dodawanie...</span>
+                  </div>
+                ) : (
+                  "Dodaj rodzinę"
+                )}
+              </button>
             </form>
           </motion.div>
         </div>
@@ -163,8 +232,14 @@ const Dashboard = () => {
             placeholder="Podaj Kod"
             id="family_code_id"
             className="family_input_code"
+            disabled={isLoading}
+            onChange={handleFamilyCodeChange}
           />
-          <button onClick={handleFamilyJoining} className="join_family_button">
+          <button
+            onClick={handleFamilyJoining}
+            className="join_family_button"
+            disabled={isLoading}
+          >
             Dołącz do rodziny
           </button>
         </motion.div>
