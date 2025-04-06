@@ -12,12 +12,17 @@ const Register = () => {
 
   const registerToDatabase = async (email: string) => {
     const token = await auth.currentUser?.getIdToken();
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    });
     const response = await fetch(`${apiUrl}/registration/register`, {
       method: "POST",
       body: JSON.stringify({ mail: email }),
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: headers,
+      mode: "cors",
+      credentials: "include",
     });
     if (!response.ok) {
       throw new Error("serwer krzyczy ze nie jest ok :(");
