@@ -3,9 +3,11 @@ import "./shopingList.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import FaqItem from "../faq/faq_item";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import ShopListItem from "../shop_list_item/shop_list_item";
+import { auth } from "../../firebase";
+import { apiUrl } from "../../constants/url";
 interface ShoppingItem {
   id: String;
   id_rodziny: String;
@@ -43,6 +45,28 @@ const ShoppingList = () => {
   const { img } = location.state || {};
   const { code } = location.state || {};
 
+  const [imageSrc, setImageSrc] = useState<string>(img);
+  const fetchPhoto = async (filename: string) => {
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const response = await fetch(`${apiUrl}/files/${filename}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        setImageSrc(imageUrl);
+      } else {
+        console.error("Failed to fetch image:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    }
+  };
   const members = [
     "Kononowicz",
     "Jabłonowski",
@@ -57,6 +81,11 @@ const ShoppingList = () => {
     </span>
   ));
 
+  useEffect(() => {
+    if (img) {
+      fetchPhoto(img);
+    }
+  }, [img]);
   const [shoppingItems, setShoppingItems] = useState<ShoppingItem[]>([]);
   const getShoppingItems = () => {
     setShoppingItems(
@@ -101,7 +130,11 @@ const ShoppingList = () => {
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          <img src={img} alt="zdjęcie rodziny" className="family_data_img" />
+          <img
+            src={imageSrc}
+            alt="ładuje ci sie zdjecie niestety"
+            className="family_data_img"
+          />
         </motion.div>
 
         <motion.div

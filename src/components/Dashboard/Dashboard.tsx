@@ -8,10 +8,16 @@ import { animate, motion, useInView } from "motion/react";
 import { inView, stagger } from "motion";
 import { apiUrl } from "../../constants/url";
 import { auth } from "../../firebase";
+import { Szopracz } from "../../Szopracz/Szopracz";
 interface Family {
   id: Key;
-  name: string;
-  img: string;
+  familyName: string;
+  image: string;
+  members: [
+    {
+      mail: string;
+    }
+  ];
   code: string;
 }
 
@@ -28,8 +34,9 @@ const Dashboard = () => {
 
   const fetchFamilies = async () => {
     try {
+      setIsLoading(true);
       const token = await auth.currentUser?.getIdToken();
-      const response = await fetch(`${apiUrl}/Family/getFamilies`, {
+      const response = await fetch(`${apiUrl}/Family/getFamilyWithMembers`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -41,6 +48,7 @@ const Dashboard = () => {
       const data: Family[] = await response.json();
       setFamilies(data);
     } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,7 +87,6 @@ const Dashboard = () => {
 
   const handleAddFamily = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     if (!newFamilyName || !newFamilyImg) {
       setErrorMessage(
         "Brakuje nazwy lub zdjęcia rodziny (możliwe że zły plik lub rozmiar)"
@@ -243,36 +250,52 @@ const Dashboard = () => {
             Dołącz do rodziny
           </button>
         </motion.div>
-        <ul className="dashboard__list">
-          {families.length
-            ? families.map((family, index) => (
-                <motion.li
-                  className="dashboard__list-item"
-                  key={family.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.1, delay: index * 0.1 }}
-                >
-                  <Card nazwa={family.name} img={family.img} id={family.id} />
-                </motion.li>
-              ))
-            : DUMMY_FAMILIES.map((family, index) => (
-                <motion.li
-                  className="dashboard__list-item"
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.1, delay: index * 0.1 }}
-                >
-                  <Card
-                    nazwa={family.name}
-                    img={family.img}
-                    id={family.id}
-                    code={family.code}
-                  />
-                </motion.li>
-              ))}
-        </ul>
+        <div className="dashboard_list-container">
+          {isLoading ? (
+            <Szopracz></Szopracz>
+          ) : (
+            <ul className="dashboard__list">
+              {
+                families.length ? (
+                  families.map((family, index) => (
+                    <motion.li
+                      className="dashboard__list-item"
+                      key={family.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.1, delay: index * 0.1 }}
+                    >
+                      <Card
+                        nazwa={family.familyName}
+                        img={family.image}
+                        id={family.id}
+                      />
+                    </motion.li>
+                  ))
+                ) : (
+                  <h1>Pusto tu</h1>
+                )
+                // DUMMY_FAMILIES.map((family, index) => (
+                //     <motion.li
+                //       className="dashboard__list-item"
+                //       key={index}
+                //       initial={{ opacity: 0, x: -20 }}
+                //       animate={{ opacity: 1, x: 0 }}
+                //       transition={{ duration: 0.1, delay: index * 0.1 }}
+                //     >
+                //       <Card
+                //         nazwa={family.name}
+                //         img={family.img}
+                //         id={family.id}
+                //         code={family.code}
+                //       />
+                //     </motion.li>
+                //   )
+                //   )
+              }
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

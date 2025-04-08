@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
+import { Szopracz } from "../Szopracz/Szopracz";
 
 interface AuthContextType {
   user: User | null;
@@ -26,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
-      {loading ? <p>Loading...</p> : children}
+      {loading ? <Szopracz></Szopracz> : children}
     </AuthContext.Provider>
   );
 };
