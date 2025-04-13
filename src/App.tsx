@@ -13,13 +13,14 @@ import Header from "./components/header/header";
 import ShoppingList from "./components/ShoppingList/ShoppingList";
 import Footer from "./components/footer/footer";
 import ShopListItem from "./components/shop_list_item/shop_list_item";
-import Account from "./components/account/Account"
+import Account from "./components/account/Account";
 import Faq from "./components/faq/faq";
+import { Szopracz } from "./Szopracz/Szopracz";
 
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Szopracz></Szopracz>;
   return user ? children : <Navigate to="/login" />;
 };
 

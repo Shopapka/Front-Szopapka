@@ -1,0 +1,34 @@
+.krec_sie_jak_garen {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  animation: spinAndWobble 2s infinite ease-in-out;
+  margin-top: 20px;
+  overflow-y: hidden;
+  padding: 10px;
+}
+
+.krec_sie_jak_garen img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow-y: hidden;
+}
+
+@keyframes spinAndWobble {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
