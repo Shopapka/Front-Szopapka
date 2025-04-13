@@ -13,7 +13,7 @@ export const Card = (props: any) => {
     navigate("/shoppingList", {
       state: {
         nazwa: props.nazwa,
-        id: props.id,
+        familyId: props.familyId,
         img: props.img,
         code: props.code,
       },
@@ -21,6 +21,7 @@ export const Card = (props: any) => {
   };
 
   const fetchPhoto = async (filename: string) => {
+    console.log(props.familyId);
     try {
       const token = await auth.currentUser?.getIdToken();
       const response = await fetch(`${apiUrl}/files/${filename}`, {
@@ -54,7 +55,7 @@ export const Card = (props: any) => {
         <img
           className="card__image"
           src={imageSrc}
-          alt="GORĄCE MAMUŚKI W TWOJEJ OKOLICY"
+          alt="WYSADZIŁO BAZE DANYCH nie no żartuje ładuje sie"
         />
       </div>
       <h2 className="card__title">{props.nazwa}</h2>

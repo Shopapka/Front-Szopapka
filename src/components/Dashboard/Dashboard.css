@@ -44,14 +44,15 @@
 
 .dashboard__list {
   display: grid;
-  justify-content: space-between;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 250px));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
   width: 100%;
   list-style: none;
-  padding: 0;
+  padding: 20px 0;
   margin: 0;
+  place-items: center;
 }
+
 .dashboard_list-container {
   width: 100%;
 }
@@ -204,6 +205,8 @@
 }
 
 .dashboard__list-item {
+  width: 100%;
+  max-width: 250px;
   display: flex;
   justify-content: center;
 }

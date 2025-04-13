@@ -18,7 +18,8 @@ interface Family {
       mail: string;
     }
   ];
-  code: string;
+  familyCode: string;
+  familyId: string;
 }
 
 const Dashboard = () => {
@@ -136,11 +137,20 @@ const Dashboard = () => {
   };
 
   async function handleFamilyJoining() {
-    const formData = new FormData();
-    formData.append("familyCode", familyCode);
+    if (!familyCode) {
+      setErrorMessage("Kod rodziny nie może być pusty.");
+      return;
+    }
+
     try {
+      setIsLoading(true);
+      setErrorMessage(null);
+
       const token = await auth.currentUser?.getIdToken();
-      console.log(token);
+      if (!token) {
+        setErrorMessage("Użytkownik niezalogowany lub brak tokena.");
+        return;
+      }
 
       const response = await fetch(`${apiUrl}/Family/join`, {
         method: "POST",
@@ -148,11 +158,21 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: familyCode,
+        body: JSON.stringify({ familyCode }),
       });
-    } catch (error) {
-      console.log(error);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        setErrorMessage(`bruh: ${errorText}`);
+        throw new Error(
+          `Nie udało sie dołączyć do rodziny: ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      console.log("Dołączono do rodziny:", data);
     } finally {
+      setIsLoading(false);
       fetchFamilies();
     }
   }
@@ -252,47 +272,31 @@ const Dashboard = () => {
         </motion.div>
         <div className="dashboard_list-container">
           {isLoading ? (
-            <Szopracz></Szopracz>
+            <div className="items-loading">
+              <Szopracz />
+            </div>
           ) : (
             <ul className="dashboard__list">
-              {
-                families.length ? (
-                  families.map((family, index) => (
-                    <motion.li
-                      className="dashboard__list-item"
-                      key={family.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.1, delay: index * 0.1 }}
-                    >
-                      <Card
-                        nazwa={family.familyName}
-                        img={family.image}
-                        id={family.id}
-                      />
-                    </motion.li>
-                  ))
-                ) : (
-                  <h1>Pusto tu</h1>
-                )
-                // DUMMY_FAMILIES.map((family, index) => (
-                //     <motion.li
-                //       className="dashboard__list-item"
-                //       key={index}
-                //       initial={{ opacity: 0, x: -20 }}
-                //       animate={{ opacity: 1, x: 0 }}
-                //       transition={{ duration: 0.1, delay: index * 0.1 }}
-                //     >
-                //       <Card
-                //         nazwa={family.name}
-                //         img={family.img}
-                //         id={family.id}
-                //         code={family.code}
-                //       />
-                //     </motion.li>
-                //   )
-                //   )
-              }
+              {families.length ? (
+                families.map((family, index) => (
+                  <motion.li
+                    className="dashboard__list-item"
+                    key={family.familyId}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.1, delay: index * 0.1 }}
+                  >
+                    <Card
+                      nazwa={family.familyName}
+                      img={family.image}
+                      code={family.familyCode}
+                      familyId={family.familyId}
+                    />
+                  </motion.li>
+                ))
+              ) : (
+                <h1>Pusto tu</h1>
+              )}
             </ul>
           )}
         </div>

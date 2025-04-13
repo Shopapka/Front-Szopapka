@@ -3,7 +3,6 @@
   width: 100px;
   height: 100px;
   animation: spinAndWobble 2s infinite ease-in-out;
-  margin-left: 45%;
   margin-top: 20px;
   overflow-y: hidden;
   padding: 10px;
